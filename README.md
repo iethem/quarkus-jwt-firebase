@@ -1,6 +1,6 @@
 # quarkus-jwt-firebase project
 
-> __Note:__ README and a blog post will be there soon, for now you can use [this repo](https://github.com/iethem/spring-jwt-firebase) as a reference. 
+> __Note:__ README and a blog post will be here soon, for now you can use [this repo](https://github.com/iethem/spring-jwt-firebase) as a reference. 
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
