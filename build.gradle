@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+}
+
+repositories {
+     mavenLocal()
+     mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-admin:6.12.2'
+
+    implementation 'io.quarkus:quarkus-resteasy-jsonb'
+    implementation 'io.quarkus:quarkus-smallrye-jwt'
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-resteasy'
+
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+}
+
+group 'io.github.iethem'
+version '1.0.0-SNAPSHOT'
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+task npmInstall(type: Exec) {
+  workingDir 'src/main/javascript'
+  commandLine 'npm', 'install'
+}
+
+task npmBuild(type: Exec) {
+  workingDir 'src/main/javascript'
+  commandLine 'npm', 'run', 'build'
+}
+
+task deleteOldBuild(type: Delete) {
+	delete "src/main/resources/META-INF/resources/"
+}
+
+task copyNewBuild(type: Copy) {
+	from 'src/main/javascript/build'
+	into 'src/main/resources/META-INF/resources/'
+}
+
+copyNewBuild.dependsOn(deleteOldBuild)
